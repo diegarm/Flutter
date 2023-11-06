@@ -16,9 +16,77 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-          appBar: AppBar(title: Text('Tarefas')),
-          body: Container(),
-          floatingActionButton: FloatingActionButton(onPressed: (){}),),
+        appBar: AppBar(title: Text('Tarefas')),
+        body: ListView(
+          children: [
+            Task('Tarefa 1'),
+            Task('Tarefa 2'),
+            Task('Tarefa 3'),
+            Task('Tarefa 4'),
+            Task('Tarefa 5'),
+            Task('Tarefa 6'),
+            Task('Tarefa 7'),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
+      ),
     );
+  }
+}
+
+class Task extends StatefulWidget {
+  final String nome;
+
+  const Task(this.nome, {super.key});
+
+  @override
+  State<Task> createState() => _TaskState();
+}
+
+class _TaskState extends State<Task> {
+  int nivel = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Stack(
+          children: [
+            Container(
+              color: Colors.blue,
+              height: 140,
+            ),
+            Column(
+              children: [
+                Container(
+                    color: Colors.white70,
+                    height: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          color: Colors.black26,
+                          width: 72,
+                          height: 100,
+                        ),
+                        Text(widget.nome, style: TextStyle(fontSize: 24)),
+                        ElevatedButton(
+                            onPressed: () {
+                              setState(() {
+                                nivel++;
+                              });
+                            },
+                            child: Icon(Icons.arrow_drop_up))
+                      ],
+                    )),
+                Text('Nivel: $nivel',
+                    style: TextStyle(color: Colors.white, fontSize: 16)),
+                LinearProgressIndicator(
+                  
+                )
+              ],
+            )
+          ],
+        ));
   }
 }
