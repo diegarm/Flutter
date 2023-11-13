@@ -16,16 +16,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        appBar: AppBar(title: Text('Tarefas')),
+        appBar: AppBar(leading: Container(), title: Text('Tarefas')),
         body: ListView(
           children: [
-            Task('Tarefa 1'),
-            Task('Tarefa 2'),
-            Task('Tarefa 3'),
-            Task('Tarefa 4'),
-            Task('Tarefa 5'),
-            Task('Tarefa 6'),
-            Task('Tarefa 7'),
+            Task('Tarefa 1', 'https://images.squarespace-cdn.com/content/v1/5a832f4ad0e62892b8e61f61/d04b7839-e580-4031-bba2-0e8fcd8af6e4/11.png?format=1500w'),
+            Task('Tarefa 2', 'https://images.squarespace-cdn.com/content/v1/5a832f4ad0e62892b8e61f61/8dbf7793-852a-44b2-97fb-b79d1d5d71d5/18.png?format=1500w'),
+            Task('Tarefa 3', 'https://images.squarespace-cdn.com/content/v1/5a832f4ad0e62892b8e61f61/fa2528eb-9865-447a-9a35-cce1aed53f83/1.png?format=1500w'),
+            Task('Tarefa 4', 'https://images.squarespace-cdn.com/content/v1/5a832f4ad0e62892b8e61f61/07aa9b81-bda0-4136-9854-b24c135222e3/12.png?format=1500w'),
           ],
         ),
         floatingActionButton: FloatingActionButton(onPressed: () {}),
@@ -36,8 +33,8 @@ class MyApp extends StatelessWidget {
 
 class Task extends StatefulWidget {
   final String nome;
-
-  const Task(this.nome, {super.key});
+  final String foto;
+  const Task(this.nome, this.foto, {super.key});
 
   @override
   State<Task> createState() => _TaskState();
@@ -65,24 +62,52 @@ class _TaskState extends State<Task> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          color: Colors.black26,
-                          width: 72,
-                          height: 100,
-                        ),
+                            color: Colors.black26,
+                            width: 72,
+                            height: 100,
+                            child: Image.network(
+                              widget.foto,
+                              fit: BoxFit.cover,
+                            )),
                         Text(widget.nome, style: TextStyle(fontSize: 24)),
-                        ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                nivel++;
-                              });
-                            },
-                            child: Icon(Icons.arrow_drop_up))
+                        Container(
+                          height: 52,
+                          width: 52,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  nivel++;
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.arrow_drop_up),
+                                  Text('UP', style: TextStyle(fontSize: 12))
+                                ],
+                              )),
+                        )
                       ],
                     )),
-                Text('Nivel: $nivel',
-                    style: TextStyle(color: Colors.white, fontSize: 16)),
-                LinearProgressIndicator(
-                  
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        child: LinearProgressIndicator(
+                            color: Colors.white, value: nivel / 10),
+                        width: 200,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Text('Nivel: $nivel',
+                          style: TextStyle(color: Colors.white, fontSize: 16)),
+                    ),
+                  ],
                 )
               ],
             )
