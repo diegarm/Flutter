@@ -149,8 +149,8 @@ class _TaskState extends State<Task> {
                           ],
                         ),
                         Container(
-                          height: 52,
-                          width: 52,
+                          height: 32,
+                          width: 32,
                           child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
